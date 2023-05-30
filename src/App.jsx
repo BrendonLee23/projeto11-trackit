@@ -1,4 +1,6 @@
 import axios from "axios"
+// import styled from "styled-components"
+import TelaLogin from "./pages/TelaLogin/TelaLogin"
 
 export default function App() {
 
@@ -6,8 +8,11 @@ export default function App() {
 
   return (
     <div>
-      Projetão
+      <TelaLogin/>
+      {/* <TelaCadastro></TelaCadastro> */}
     </div>
   )
 }
+
+
 

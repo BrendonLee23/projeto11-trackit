@@ -2,25 +2,26 @@ import styled from "styled-components"
 import Logo from "../../imagens/logo.png"
 import { Link } from "react-router-dom"
 
-
-export default function TelaLogin() {
+export default function TelaCadastro() {
     return (
-        <Login>
+        <Cadastro>
             <img src={Logo} alt="logo" />
             <ContainerForm>
                 <input name="email" type="text" placeholder="email" />
                 <input name="senha" type="text" placeholder="senha" />
-                <button>Entrar</button>
-                <Link to={"/cadastro"}>
-                    <p>Não tem uma conta? Cadastre-se!</p>
+                <input name="nome" type="text" placeholder="nome" />
+                <input name="foto" type="text" placeholder="foto" />
+                <button>Cadastrar</button>
+                <Link to={"/"}>
+                    <p>Já tem uma conta? Faça login!</p>
                 </Link>
             </ContainerForm>
-        </Login>
+        </Cadastro>
     )
 }
 
 
-const Login = styled.div`
+const Cadastro = styled.div`
     width: 375px;
     height: 667px;
     background-color: #E5E5E5;;
@@ -31,7 +32,7 @@ const Login = styled.div`
     img{
         width: 180px;
         height: 179px;
-        margin-top: -130px;
+        margin-top: -23px;
         margin-bottom: 33px;
     }
 `

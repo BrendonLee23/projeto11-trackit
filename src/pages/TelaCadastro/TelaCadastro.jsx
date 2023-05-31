@@ -13,7 +13,6 @@ export default function TelaCadastro() {
     const [foto, setFoto] = useState("");
 
     function finalizarCadastro(event) {
-        alert("teste")
         event.preventDefault();
 
         const userInfos = {
@@ -34,6 +33,8 @@ export default function TelaCadastro() {
             })
             .catch((error) => {
                 console.log("O POST DEU ERRO", error);
+                alert("Os dados inseridos estão em uso. Faça o Login ou tente cadastrar novos dados")
+                window.location.reload()
             });
     }
 

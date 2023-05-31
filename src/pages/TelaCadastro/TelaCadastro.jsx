@@ -1,23 +1,80 @@
-import styled from "styled-components"
-import Logo from "../../imagens/logo.png"
-import { Link } from "react-router-dom"
+import styled from "styled-components";
+import Logo from "../../imagens/logo.png";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 export default function TelaCadastro() {
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [nome, setNome] = useState("");
+    const [foto, setFoto] = useState("");
+
+    function finalizarCadastro(event) {
+        event.preventDefault();
+
+        const userInfos = {
+            email: email,
+            name: nome,
+            password: senha,
+            image: foto,
+        };
+
+        axios
+            .post(
+                "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
+                userInfos
+            )
+            .then((response) => {
+                console.log("O POST DEU CERTO", response);
+                navigate("/");
+            })
+            .catch((error) => {
+                console.log("O POST DEU ERRO", error);
+            });
+    }
+
     return (
         <Cadastro>
             <img src={Logo} alt="logo" />
-            <ContainerForm>
-                <input name="email" type="text" placeholder="email" />
-                <input name="senha" type="text" placeholder="senha" />
-                <input name="nome" type="text" placeholder="nome" />
-                <input name="foto" type="text" placeholder="foto" />
-                <button>Cadastrar</button>
+            <ContainerForm onSubmit={finalizarCadastro}>
+                <input
+                    required
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    type="email"
+                    placeholder="email"
+                />
+                <input
+                    required
+                    onChange={(e) => setSenha(e.target.value)}
+                    value={senha}
+                    type="password"
+                    placeholder="senha"
+                />
+                <input
+                    required
+                    onChange={(e) => setNome(e.target.value)}
+                    value={nome}
+                    type="text"
+                    placeholder="nome"
+                />
+                <input
+                    required
+                    onChange={(e) => setFoto(e.target.value)}
+                    value={foto}
+                    type="url"
+                    placeholder="foto"
+                />
+                <button type="submit">Cadastrar</button>
                 <Link to={"/"}>
                     <p>Já tem uma conta? Faça login!</p>
                 </Link>
             </ContainerForm>
         </Cadastro>
-    )
+    );
 }
 
 
@@ -94,3 +151,4 @@ const ContainerForm = styled.div`
         color: #52B6FF;
     }
 `
+

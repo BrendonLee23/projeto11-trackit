@@ -3,6 +3,7 @@ import axios from "axios"
 import TelaLogin from "./pages/TelaLogin/TelaLogin"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import TelaCadastro from "./pages/TelaCadastro/TelaCadastro"
+// import HomePage from "./pages/Home/Home"
 // import TelaCadastro from "./pages/TelaCadastro/TelaCadastro"
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<TelaLogin />}></Route>
           <Route path="/cadastro" element={<TelaCadastro />}></Route>
+          {/* <Route path="/home" element={<HomePage />}></Route> */}
         </Routes>
       </BrowserRouter>
     </div>

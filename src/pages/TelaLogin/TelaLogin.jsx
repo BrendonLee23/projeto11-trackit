@@ -8,9 +8,11 @@ export default function TelaLogin() {
         <Login>
             <img src={Logo} alt="logo" />
             <ContainerForm>
-                <input name="email" type="text" placeholder="email" />
-                <input name="senha" type="text" placeholder="senha" />
-                <button>Entrar</button>
+                <input  name="email" type="text" placeholder="email" />
+                <input  name="senha" type="text" placeholder="senha" />
+                {/* <Link to={"/home"}> */}
+                <button type="submit" >Entrar</button>
+                {/* </Link> */}
                 <Link to={"/cadastro"}>
                     <p>Não tem uma conta? Cadastre-se!</p>
                 </Link>

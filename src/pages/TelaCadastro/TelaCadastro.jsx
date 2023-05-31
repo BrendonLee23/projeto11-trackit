@@ -13,6 +13,7 @@ export default function TelaCadastro() {
     const [foto, setFoto] = useState("");
 
     function finalizarCadastro(event) {
+        alert("teste")
         event.preventDefault();
 
         const userInfos = {
@@ -94,7 +95,7 @@ const Cadastro = styled.div`
     }
 `
 
-const ContainerForm = styled.div`
+const ContainerForm = styled.form`
     display: flex;
     flex-direction: column;
     gap: 8px;

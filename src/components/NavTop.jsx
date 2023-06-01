@@ -3,10 +3,9 @@ import styled from "styled-components"
 
 export default function NavTop(){
     return(
-        <>
         <Top>
+            <img src="" alt="" />
         </Top>
-        </>
     )
 }
 
@@ -19,4 +18,7 @@ const Top = styled.div`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     top: 0px;
     position: fixed;
+    display: flex;  
+    align-items: center;
+    justify-content: space-between;
 `

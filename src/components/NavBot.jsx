@@ -11,7 +11,7 @@ const Bot = styled.div`
     height: 70px;
     left: 0px;
     top: 597px;
-    background: #FFFFFF;
+    background: #f3f3f3;
     bottom: 0px;
     position: fixed;
 `

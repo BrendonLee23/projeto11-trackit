@@ -19,7 +19,7 @@ export default function TelaCadastro() {
             email: email,
             name: nome,
             password: senha,
-            image: foto,
+            image: foto
         };
 
         axios
@@ -30,6 +30,7 @@ export default function TelaCadastro() {
             .then((response) => {
                 console.log("O POST DEU CERTO", response);
                 navigate("/");
+                console.log(response.data.config.headers.Autorization)
             })
             .catch((error) => {
                 console.log("O POST DEU ERRO", error);

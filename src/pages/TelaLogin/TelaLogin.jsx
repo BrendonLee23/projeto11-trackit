@@ -1,18 +1,70 @@
 import styled from "styled-components"
 import Logo from "../../imagens/logo.png"
-import { Link } from "react-router-dom"
-
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios";
+import { useContext, useState } from "react";
+import UserContext from "../../contexts/UserContext";
 
 export default function TelaLogin() {
+
+    const { user, setUser} = useContext(UserContext)
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+
+    function realizarLogin(event) {
+        event.preventDefault();
+
+
+        const userInfos = {
+            email: email,
+            password: senha
+        };
+
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${user}`
+            }
+        }
+
+        axios
+            .post(
+                "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
+                userInfos, config
+            )
+            .then((response) => {
+                console.log("O LOGIN DEU CERTO", response);
+                navigate("/habit");
+                setUser(response.data.token)
+            })
+            .catch((error) => {
+                console.log("O POST DEU ERRO", error);
+                alert("Dados incorretos. Tente novamente.")
+                window.location.reload()
+            });
+    }
+
+
     return (
         <Login>
             <img src={Logo} alt="logo" />
-            <ContainerForm>
-                <input  name="email" type="text" placeholder="email" />
-                <input  name="senha" type="text" placeholder="senha" />
-                {/* <Link to={"/home"}> */}
-                <button type="submit" >Entrar</button>
-                {/* </Link> */}
+            <ContainerForm onSubmit={realizarLogin}>
+            <input
+                    required
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    type="email"
+                    placeholder="email"
+                />
+                <input
+                    required
+                    onChange={(e) => setSenha(e.target.value)}
+                    value={senha}
+                    type="password"
+                    placeholder="senha"
+                />
+                <button type="submit">Entrar</button>
                 <Link to={"/cadastro"}>
                     <p>Não tem uma conta? Cadastre-se!</p>
                 </Link>
@@ -38,7 +90,7 @@ const Login = styled.div`
     }
 `
 
-const ContainerForm = styled.div`
+const ContainerForm = styled.form`
     display: flex;
     flex-direction: column;
     gap: 8px;

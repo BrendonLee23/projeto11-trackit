@@ -12,10 +12,11 @@ export default function App() {
 
   axios.defaults.headers.common['Authorization'] = '2pUWOijhJnpz3JVF19w1b9uP'
   const [user, setUser] = useState({})
+  const [userImage, setUserImage] = useState({})
   console.log(user)
 
   return (
-    <UserContext.Provider value={{user, setUser}}>
+    <UserContext.Provider value={{user, setUser, userImage, setUserImage}}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<TelaLogin />}></Route>

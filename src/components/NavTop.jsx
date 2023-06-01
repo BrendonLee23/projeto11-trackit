@@ -1,10 +1,18 @@
 import styled from "styled-components"
+import Marca from "../imagens/logoTop.png"
+import { useContext } from "react"
+import UserContext from "../contexts/UserContext"
 
+export default function NavTop() {
 
-export default function NavTop(){
-    return(
+    const { userImage } = useContext(UserContext)
+
+    return (
         <Top>
-            <img src="" alt="" />
+            <img src={Marca} alt="logo" />
+            <UserImage>
+                <img src={userImage} alt="user-image" />
+            </UserImage>
         </Top>
     )
 }
@@ -21,4 +29,15 @@ const Top = styled.div`
     display: flex;  
     align-items: center;
     justify-content: space-between;
+    img{
+        margin-left: 20px;
+    }
 `
+const UserImage = styled.div`
+        img{
+        border-radius: 98.5px;
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+    }
+    `

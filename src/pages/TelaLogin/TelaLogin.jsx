@@ -7,7 +7,7 @@ import UserContext from "../../contexts/UserContext";
 
 export default function TelaLogin() {
 
-    const { user, setUser} = useContext(UserContext)
+    const { user, setUser, setUserImage} = useContext(UserContext)
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -15,7 +15,6 @@ export default function TelaLogin() {
 
     function realizarLogin(event) {
         event.preventDefault();
-
 
         const userInfos = {
             email: email,
@@ -37,6 +36,7 @@ export default function TelaLogin() {
                 console.log("O LOGIN DEU CERTO", response);
                 navigate("/habit");
                 setUser(response.data.token)
+                setUserImage(response.data.image)
             })
             .catch((error) => {
                 console.log("O POST DEU ERRO", error);
@@ -44,7 +44,6 @@ export default function TelaLogin() {
                 window.location.reload()
             });
     }
-
 
     return (
         <Login>

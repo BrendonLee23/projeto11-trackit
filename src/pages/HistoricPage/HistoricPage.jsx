@@ -4,19 +4,19 @@ import NavBot from "../../components/NavBot"
 
 
 
-export default function DayPage(){
+export default function HistoricPage(){
 
 
     return(
-        <Home>
+        <Historic>
             <NavTop/>
-            <Title>Segunda, 17/05</Title>
+            <Title>Histórico</Title>
             <NavBot/>
-        </Home>
+        </Historic>
     )
 }
 
-const Home = styled.div`
+const Historic = styled.div`
     width: 375px;
     height: 667px;
     background-color: #E5E5E5;;
@@ -25,7 +25,6 @@ const Home = styled.div`
     justify-content: center;
     align-items: center;
 `
-
 const Title = styled.h1`
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -34,4 +33,3 @@ const Title = styled.h1`
         line-height: 29px;
         color: #126BA5;
 `
-

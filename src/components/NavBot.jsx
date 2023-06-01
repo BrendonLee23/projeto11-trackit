@@ -10,10 +10,10 @@ export default function NavBot() {
             <Link to={"/day"} className="link">
                 <StyledButton>
                     <img src={BotaoHoje} alt="today-button" />
-                    <h1>Hoje</h1>
+                    <p>Hoje</p>
                 </StyledButton>
             </Link>
-            <Link to={"/habit"} className="link">
+            <Link to={"/historic"} className="link">
                 <h1>Histórico</h1>
             </Link>
         </Bottom>
@@ -31,22 +31,25 @@ const Bottom = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
-
-    .link {
-      text-decoration: none; /* Remover sublinhado do link */
-    }
-
-    h1 {
-    outline: 0;
-    -family: 'Lexend Deca';
+    font-family: 'Lexend Deca';
     font-style: normal;
     font-weight: 400;
     font-size: 17.976px;
     line-height: 22px;
     text-align: center;
-    color: #52B6FF;
+    .link {
+        text-decoration: none;
     }
-`;
+    h1{
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17.976px;
+        line-height: 22px;
+        text-align: center;
+        color: #52B6FF;
+    }
+`
 
 const StyledButton = styled.div`
     padding: 0;
@@ -61,15 +64,9 @@ const StyledButton = styled.div`
     img{
             position: relative;
         }
-    h1{
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 17.976px;
-        line-height: 22px;
-        text-align: center;
-        color: #FFFFFF; 
+    p{
         position: absolute;
+        color: #FFFFFF; 
     }
 `;
 

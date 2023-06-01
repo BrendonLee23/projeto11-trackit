@@ -4,74 +4,92 @@ import { Link, useNavigate } from "react-router-dom"
 import axios from "axios";
 import { useContext, useState } from "react";
 import UserContext from "../../contexts/UserContext";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function TelaLogin() {
 
-    const { user, setUser, setUserImage} = useContext(UserContext)
+    const { user, setUser, setUserImage } = useContext(UserContext)
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [realizarLogin, setRealizarLogin] = useState(false);
 
-    function realizarLogin(event) {
+    function login(event) {
         event.preventDefault();
 
         const userInfos = {
             email: email,
-            password: senha
+            password: senha,
         };
 
         const config = {
             headers: {
-                "Authorization": `Bearer ${user}`
-            }
-        }
+                Authorization: `Bearer ${user}`,
+            },
+        };
 
-        axios
-            .post(
-                "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
-                userInfos, config
-            )
-            .then((response) => {
-                console.log("O LOGIN DEU CERTO", response);
-                navigate("/habit");
-                setUser(response.data.token)
-                setUserImage(response.data.image)
-            })
-            .catch((error) => {
-                console.log("O POST DEU ERRO", error);
-                alert("Dados incorretos. Tente novamente.")
-                window.location.reload()
-            });
+        setRealizarLogin(true);
+
+        setTimeout(() => {
+            axios
+                .post(
+                    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
+                    userInfos,
+                    config
+                )
+                .then((response) => {
+                    console.log("O LOGIN DEU CERTO", response);
+                    navigate("/day");
+                    setUser(response.data.token);
+                    setUserImage(response.data.image);
+                })
+                .catch((error) => {
+                    console.log("O POST DEU ERRO", error);
+                    alert("Dados incorretos. Tente novamente.");
+                    window.location.reload();
+                })
+                .finally(() => {
+                    setRealizarLogin(false);
+                });
+        }, 2000);
     }
 
-    return (
-        <Login>
-            <img src={Logo} alt="logo" />
-            <ContainerForm onSubmit={realizarLogin}>
+return (
+    <Login>
+        <img src={Logo} alt="logo" />
+        <ContainerForm onSubmit={login}>
             <input
-                    required
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    type="email"
-                    placeholder="email"
-                />
-                <input
-                    required
-                    onChange={(e) => setSenha(e.target.value)}
-                    value={senha}
-                    type="password"
-                    placeholder="senha"
-                />
-                <button type="submit">Entrar</button>
-                <Link to={"/cadastro"}>
-                    <p>Não tem uma conta? Cadastre-se!</p>
-                </Link>
-            </ContainerForm>
-        </Login>
-    )
-}
-
+                required
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                type="email"
+                placeholder="email"
+            />
+            <input
+                required
+                onChange={(e) => setSenha(e.target.value)}
+                value={senha}
+                type="password"
+                placeholder="senha"
+            />
+            {/* <button type="submit">Entrar</button> */}
+            <ButtonWrapper>
+                <StyledButton type="submit" disabled={realizarLogin}>
+                    {realizarLogin ? (
+                        <ThreeDots height={40} width={40} color="#FFFFFF" />
+                    ) : (
+                        "Entrar"
+                    )}
+                </StyledButton>
+            </ButtonWrapper>
+            <Link to={"/cadastro"}>
+                <p>Não tem uma conta? Cadastre-se!</p>
+            </Link>
+        </ContainerForm>
+    </Login>
+)
+    }
 
 const Login = styled.div`
     width: 375px;
@@ -114,27 +132,7 @@ const ContainerForm = styled.form`
         color: #DBDBDB;
         padding-left: 10px;
     }
-    button{
-        background: #52B6FF;
-        border: #064470;
-        border-radius: 4.63636px;
-        width: 303px;
-        height: 45px;
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20.976px;
-        line-height: 26px;
-        text-align: center;
-        color: #FFFFFF;
-        cursor: pointer;
-        margin-bottom: 20px;
-        &:hover {
-            background-color: #89afd6; 
-            transition: 0.5s;
-            opacity: 0.7;
-            }     
-    }
+    
     p{
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -145,4 +143,36 @@ const ContainerForm = styled.form`
         text-decoration-line: underline;
         color: #52B6FF;
     }
+`
+
+const ButtonWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+`;
+
+const StyledButton = styled.button`
+    background: #52B6FF;
+    border: #064470;
+    border-radius: 4.63636px;
+    width: 303px;
+    height: 45px;
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20.976px;
+    line-height: 26px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+        background-color: #89afd6; 
+        transition: 0.5s;
+        opacity: 0.7;
+        }     
 `

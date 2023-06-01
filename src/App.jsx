@@ -3,10 +3,11 @@ import axios from "axios"
 import TelaLogin from "./pages/TelaLogin/TelaLogin"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import TelaCadastro from "./pages/TelaCadastro/TelaCadastro"
-import HabitPage from "./pages/HabitPage/HabitPage"
-import DayPage from "./pages/DayPage/DayPage"
 import UserContext from "./contexts/UserContext"
 import { useState } from "react"
+import HabitPage from "./pages/HabitPage/HabitPage"
+import DayPage from "./pages/DayPage/DayPage"
+import HistoricPage from "./pages/HistoricPage/HistoricPage"
 
 export default function App() {
 
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/cadastro" element={<TelaCadastro />}></Route>
           <Route path="/habit" element={<HabitPage />}></Route>
           <Route path="/day" element={<DayPage />}></Route>
+          <Route path="/historic" element={<HistoricPage />}></Route>
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

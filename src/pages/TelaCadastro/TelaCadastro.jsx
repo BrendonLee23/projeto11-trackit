@@ -3,6 +3,7 @@ import Logo from "../../imagens/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function TelaCadastro() {
     const navigate = useNavigate();
@@ -11,8 +12,9 @@ export default function TelaCadastro() {
     const [senha, setSenha] = useState("");
     const [nome, setNome] = useState("");
     const [foto, setFoto] = useState("");
+    const [realizarCadastro, setRealizarCadastro] = useState(false);
 
-    function finalizarCadastro(event) {
+    function cadastro(event) {
         event.preventDefault();
 
         const userInfos = {
@@ -22,6 +24,9 @@ export default function TelaCadastro() {
             image: foto
         };
 
+        setRealizarCadastro(true);
+
+        setTimeout(() => {
         axios
             .post(
                 "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
@@ -36,13 +41,17 @@ export default function TelaCadastro() {
                 console.log("O POST DEU ERRO", error);
                 alert("Os dados inseridos estão em uso. Faça o Login ou tente cadastrar novos dados")
                 window.location.reload()
+            })
+            .finally(() => {
+                setRealizarCadastro(false);
             });
-    }
+    }, 2000);
+}
 
     return (
         <Cadastro>
             <img src={Logo} alt="logo" />
-            <ContainerForm onSubmit={finalizarCadastro}>
+            <ContainerForm onSubmit={cadastro}>
                 <input
                     required
                     onChange={(e) => setEmail(e.target.value)}
@@ -71,7 +80,16 @@ export default function TelaCadastro() {
                     type="url"
                     placeholder="foto"
                 />
-                <button type="submit">Cadastrar</button>
+                {/* <button type="submit">Cadastrar</button> */}
+                <ButtonWrapper>
+                <StyledButton type="submit" disabled={realizarCadastro}>
+                    {realizarCadastro ? (
+                        <ThreeDots height={40} width={40} color="#FFFFFF" />
+                    ) : (
+                        "Cadastrar"
+                    )}
+                </StyledButton>
+            </ButtonWrapper>
                 <Link to={"/"}>
                     <p>Já tem uma conta? Faça login!</p>
                 </Link>
@@ -122,27 +140,6 @@ const ContainerForm = styled.form`
         color: #DBDBDB;
         padding-left: 10px;
     }
-    button{
-        background: #52B6FF;
-        border: #064470;
-        border-radius: 4.63636px;
-        width: 303px;
-        height: 45px;
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20.976px;
-        line-height: 26px;
-        text-align: center;
-        color: #FFFFFF;
-        cursor: pointer;
-        margin-bottom: 20px;
-        &:hover {
-            background-color: #89afd6; 
-            transition: 0.5s;
-            opacity: 0.7;
-            }     
-    }
     p{
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -155,3 +152,34 @@ const ContainerForm = styled.form`
     }
 `
 
+const ButtonWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+`;
+
+const StyledButton = styled.button`
+    background: #52B6FF;
+    border: #064470;
+    border-radius: 4.63636px;
+    width: 303px;
+    height: 45px;
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20.976px;
+    line-height: 26px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+        background-color: #89afd6; 
+        transition: 0.5s;
+        opacity: 0.7;
+        }     
+`

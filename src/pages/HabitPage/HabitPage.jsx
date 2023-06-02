@@ -3,15 +3,42 @@ import NavTop from "../../components/NavTop"
 import NavBot from "../../components/NavBot"
 import AddButton from "../../imagens/add.svg"
 import NovoHabito from "../../components/NovoHabito"
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import UserContext from "../../contexts/UserContext"
+import axios from "axios"
+import MeuHabito from "../../components/MeuHabito"
 
 
 export default function HabitPage() {
 
-
+    const { user } = useContext(UserContext)
 
     const [habito, setHabito] = useState(false)
+    const [arrayDays, setArrayDays] = useState([])
+    const [arrayHabitos, setArrayHabitos] = useState(undefined)
 
+    useEffect(() => {
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user}`,
+            },
+        };
+
+        axios
+            .get(
+                "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+                config
+            )
+            .then((response) => {
+                console.log(response.data)
+                setArrayDays(response.data.days)
+                setArrayHabitos(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, [])
 
     function adicionarHabito() {
         if (habito === false) {
@@ -24,7 +51,6 @@ export default function HabitPage() {
     return (
         <Home>
             <NavTop />
-
             <ContainerHabitos>
                 <Header>
                     <Title>Meus hábitos</Title>
@@ -34,85 +60,19 @@ export default function HabitPage() {
                 </Header>
                 {habito === true ? <NovoHabito habito={habito} setHabito={setHabito} /> : ""}
                 <ListaHabitos>
-                    <MeuHabito>
-                        <h1>Ler 1 capítulo de livro</h1>
-                        <GrupoDias>
-                            <button>D</button>
-                            <button>S</button>
-                            <button>T</button>
-                            <button>Q</button>
-                            <button>Q</button>
-                            <button>S</button>
-                            <button>S</button>
-                        </GrupoDias>
-                    </MeuHabito>
-                    <MeuHabito>
-                        <h1>Ler 1 capítulo de livro</h1>
-                        <GrupoDias>
-                            <button>D</button>
-                            <button>S</button>
-                            <button>T</button>
-                            <button>Q</button>
-                            <button>Q</button>
-                            <button>S</button>
-                            <button>S</button>
-                        </GrupoDias>
-                    </MeuHabito>
-                    <img src="" alt="" />
+                    {arrayHabitos === undefined ?
+                    <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>
+                    :
+                    arrayHabitos.map((h, i) => <MeuHabito key={i} arrayDays={arrayDays} nome={h.name} /> )
+                    }
                 </ListaHabitos>
-                {/* <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2> */}
             </ContainerHabitos>
             <NavBot />
         </Home>
     )
 }
 
-const ListaHabitos = styled.div`
-    width: 345px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-`
-const MeuHabito = styled.div`
-    width: 345px;
-    height: 91px;
-    background: #FFFFFF;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    gap: 10px;
-    h1{
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 19.976px;
-        line-height: 25px;
-        color:  #666666;
-    }button{
-        display: flex;
-        box-sizing: border-box;
-        background: #FFFFFF;
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
-        width: 31px;
-        height: 31px;
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 19.976px;
-        line-height: 25px;
-        color: grey;
-        cursor: pointer;
-    }
-`
 
-const GrupoDias = styled.div`
-    display: flex;
-    gap: 8px;
-`
 
 const Home = styled.div`
     width: 375px;
@@ -123,24 +83,17 @@ const Home = styled.div`
     justify-content: center;
     align-items: center;
 `
-const Title = styled.h1`
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;   
-        font-size: 22.976px;
-        line-height: 29px;
-        color: #126BA5;
-        margin-top: 5px;
-`
-
 const ContainerHabitos = styled.div`
-height: 100%;
+height: px;
 width: 375px;
 background-color: #E5E5E5;
 display: flex;
 flex-direction: column;
 padding: 15px;
 margin-top: 70px;
+overflow-y: scroll;
+position: relative;
+padding-bottom: 120px;
 h2{
     font-family: 'Lexend Deca';
     font-style: normal;
@@ -151,11 +104,9 @@ h2{
     margin-top: 20px;
 }
 `
-
 const Header = styled.div`
-display: flex;
-justify-content: space-between;
-
+    display: flex;
+    justify-content: space-between;
 button{
     background: #52B6FF;
     border-radius: 4.63636px;
@@ -168,4 +119,23 @@ button{
     cursor: pointer;
 }
 `
+const Title = styled.h1`
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;   
+        font-size: 22.976px;
+        line-height: 29px;
+        color: #126BA5;
+        margin-top: 5px;
+`
+const ListaHabitos = styled.div`
+    width: 345px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+`
+
+
 

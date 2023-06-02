@@ -40,11 +40,11 @@ export default function NovoHabito(props) {
             )
             .then((response) => {
                 console.log("O HABITO FOI SALVO", response);
-                Navigate("/day");
+                cancelarHabito()
+                // Navigate("/day");
             })
             .catch((error) => {
                 console.log("ERRO AO SALVAR HABITO", error);
-                alert("Tente novamente.");
 
             })
     }

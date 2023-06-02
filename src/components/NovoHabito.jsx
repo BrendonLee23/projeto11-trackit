@@ -16,6 +16,7 @@ export default function NovoHabito(props) {
     const [numHabitos, setNumHabitos] = useState([])
     const {setHabito} = props
 
+
     function criarHabito(event) {
         event.preventDefault();
 
@@ -44,13 +45,14 @@ export default function NovoHabito(props) {
             .catch((error) => {
                 console.log("ERRO AO SALVAR HABITO", error);
                 alert("Tente novamente.");
-                
+
             })
     }
 
     function cancelarHabito(){
         setHabito(false)
     }
+
 
     return (
         <>
@@ -76,7 +78,7 @@ export default function NovoHabito(props) {
 
 
 const ContainerForm = styled.form`
-    width: 340px;
+    width: 345px;
     height: 180px;
     left: 17px;
     top: 147px;

@@ -8,13 +8,15 @@ import { useState } from "react"
 
 export default function HabitPage() {
 
+
+
     const [habito, setHabito] = useState(false)
 
 
-    function adicionarHabito(){
-        if(habito === false){
+    function adicionarHabito() {
+        if (habito === false) {
             setHabito(true)
-        }else{
+        } else {
             setHabito(false)
         }
     }
@@ -26,18 +28,91 @@ export default function HabitPage() {
             <ContainerHabitos>
                 <Header>
                     <Title>Meus hábitos</Title>
-                <button onClick={adicionarHabito}>
-                    <img src={AddButton} alt="add-button" />
-                </button>
+                    <button onClick={adicionarHabito}>
+                        <img src={AddButton} alt="add-button" />
+                    </button>
                 </Header>
-                {habito === true? <NovoHabito habito={habito} setHabito={setHabito}  /> : "" }
-                    
-                <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>
+                {habito === true ? <NovoHabito habito={habito} setHabito={setHabito} /> : ""}
+                <ListaHabitos>
+                    <MeuHabito>
+                        <h1>Ler 1 capítulo de livro</h1>
+                        <GrupoDias>
+                            <button>D</button>
+                            <button>S</button>
+                            <button>T</button>
+                            <button>Q</button>
+                            <button>Q</button>
+                            <button>S</button>
+                            <button>S</button>
+                        </GrupoDias>
+                    </MeuHabito>
+                    <MeuHabito>
+                        <h1>Ler 1 capítulo de livro</h1>
+                        <GrupoDias>
+                            <button>D</button>
+                            <button>S</button>
+                            <button>T</button>
+                            <button>Q</button>
+                            <button>Q</button>
+                            <button>S</button>
+                            <button>S</button>
+                        </GrupoDias>
+                    </MeuHabito>
+                    <img src="" alt="" />
+                </ListaHabitos>
+                {/* <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2> */}
             </ContainerHabitos>
             <NavBot />
         </Home>
     )
 }
+
+const ListaHabitos = styled.div`
+    width: 345px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+`
+const MeuHabito = styled.div`
+    width: 345px;
+    height: 91px;
+    background: #FFFFFF;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    h1{
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19.976px;
+        line-height: 25px;
+        color:  #666666;
+    }button{
+        display: flex;
+        box-sizing: border-box;
+        background: #FFFFFF;
+        border: 1px solid #D5D5D5;
+        border-radius: 5px;
+        width: 31px;
+        height: 31px;
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19.976px;
+        line-height: 25px;
+        color: grey;
+        cursor: pointer;
+    }
+`
+
+const GrupoDias = styled.div`
+    display: flex;
+    gap: 8px;
+`
 
 const Home = styled.div`
     width: 375px;
@@ -80,6 +155,7 @@ h2{
 const Header = styled.div`
 display: flex;
 justify-content: space-between;
+
 button{
     background: #52B6FF;
     border-radius: 4.63636px;
@@ -89,7 +165,6 @@ button{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 5px;
     cursor: pointer;
 }
 `

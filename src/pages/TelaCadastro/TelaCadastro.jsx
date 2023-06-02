@@ -54,6 +54,7 @@ export default function TelaCadastro() {
             <ContainerForm onSubmit={cadastro}>
                 <input
                     required
+                    data-test="email-input"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     type="email"
@@ -61,6 +62,7 @@ export default function TelaCadastro() {
                 />
                 <input
                     required
+                    data-test="password-input"
                     onChange={(e) => setSenha(e.target.value)}
                     value={senha}
                     type="password"
@@ -68,6 +70,7 @@ export default function TelaCadastro() {
                 />
                 <input
                     required
+                    data-test="user-name-input"
                     onChange={(e) => setNome(e.target.value)}
                     value={nome}
                     type="text"
@@ -75,6 +78,7 @@ export default function TelaCadastro() {
                 />
                 <input
                     required
+                    data-test="user-image-input"
                     onChange={(e) => setFoto(e.target.value)}
                     value={foto}
                     type="url"
@@ -82,7 +86,7 @@ export default function TelaCadastro() {
                 />
                 {/* <button type="submit">Cadastrar</button> */}
                 <ButtonWrapper>
-                <StyledButton type="submit" disabled={realizarCadastro}>
+                <StyledButton data-test="signup-btn" type="submit" disabled={realizarCadastro}>
                     {realizarCadastro ? (
                         <ThreeDots height={40} width={40} color="#FFFFFF" />
                     ) : (
@@ -90,7 +94,7 @@ export default function TelaCadastro() {
                     )}
                 </StyledButton>
             </ButtonWrapper>
-                <Link to={"/"}>
+                <Link data-test="login-link" to={"/"}>
                     <p>Já tem uma conta? Faça login!</p>
                 </Link>
             </ContainerForm>

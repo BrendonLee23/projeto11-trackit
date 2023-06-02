@@ -3,7 +3,7 @@ import styled from "styled-components"
 import UserContext from "../contexts/UserContext"
 import { useContext, useState } from "react"
 import axios from "axios"
-import { Navigate } from "react-router-dom"
+// import { Navigate } from "react-router-dom"
 import DayButton from "./DayButton"
 
 

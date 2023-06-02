@@ -61,6 +61,7 @@ return (
         <ContainerForm onSubmit={login}>
             <input
                 required
+                data-test="email-input"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 type="email"
@@ -68,6 +69,7 @@ return (
             />
             <input
                 required
+                data-test="password-input"
                 onChange={(e) => setSenha(e.target.value)}
                 value={senha}
                 type="password"
@@ -75,7 +77,7 @@ return (
             />
             {/* <button type="submit">Entrar</button> */}
             <ButtonWrapper>
-                <StyledButton type="submit" disabled={realizarLogin}>
+                <StyledButton  data-test="login-btn" type="submit" disabled={realizarLogin}>
                     {realizarLogin ? (
                         <ThreeDots height={40} width={40} color="#FFFFFF" />
                     ) : (
@@ -83,7 +85,7 @@ return (
                     )}
                 </StyledButton>
             </ButtonWrapper>
-            <Link to={"/cadastro"}>
+            <Link data-test="signup-link" to={"/cadastro"}>
                 <p>Não tem uma conta? Cadastre-se!</p>
             </Link>
         </ContainerForm>

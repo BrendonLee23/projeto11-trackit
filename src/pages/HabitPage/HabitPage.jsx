@@ -3,10 +3,21 @@ import NavTop from "../../components/NavTop"
 import NavBot from "../../components/NavBot"
 import AddButton from "../../imagens/add.svg"
 import NovoHabito from "../../components/NovoHabito"
+import { useState } from "react"
 
 
 export default function HabitPage() {
 
+    const [habito, setHabito] = useState(false)
+
+
+    function adicionarHabito(){
+        if(habito === false){
+            setHabito(true)
+        }else{
+            setHabito(false)
+        }
+    }
 
     return (
         <Home>
@@ -15,12 +26,13 @@ export default function HabitPage() {
             <ContainerHabitos>
                 <Header>
                     <Title>Meus hábitos</Title>
-                <button>
+                <button onClick={adicionarHabito}>
                     <img src={AddButton} alt="add-button" />
                 </button>
                 </Header>
-                    <NovoHabito />
-                <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                {habito === true? <NovoHabito habito={habito} setHabito={setHabito}  /> : "" }
+                    
+                <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>
             </ContainerHabitos>
             <NavBot />
         </Home>
@@ -43,6 +55,7 @@ const Title = styled.h1`
         font-size: 22.976px;
         line-height: 29px;
         color: #126BA5;
+        margin-top: 5px;
 `
 
 const ContainerHabitos = styled.div`
@@ -53,13 +66,14 @@ display: flex;
 flex-direction: column;
 padding: 15px;
 margin-top: 70px;
-p{
+h2{
     font-family: 'Lexend Deca';
     font-style: normal;
     font-weight: 400;
     font-size: 17.976px;
     line-height: 22px;
     color: #666666;
+    margin-top: 20px;
 }
 `
 

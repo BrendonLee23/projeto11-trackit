@@ -1,37 +1,81 @@
 
 import styled from "styled-components"
+import UserContext from "../contexts/UserContext"
+import { useContext, useState } from "react"
+import axios from "axios"
+import { Navigate } from "react-router-dom"
+import DayButton from "./DayButton"
 
 
+export default function NovoHabito(props) {
 
-export default function NovoHabito() {
+    const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"]
+
+    const { user } = useContext(UserContext)
+    const [nomeHabito, setNomeHabito] = useState("")
+    const [numHabitos, setNumHabitos] = useState([])
+    const {setHabito} = props
+
+    function criarHabito(event) {
+        event.preventDefault();
+
+        const habitInfos =
+        {
+            name: nomeHabito,
+            days: numHabitos
+        }
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user}`,
+            },
+        };
+
+        axios
+            .post(
+                "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+                habitInfos,
+                config
+            )
+            .then((response) => {
+                console.log("O HABITO FOI SALVO", response);
+                Navigate("/day");
+            })
+            .catch((error) => {
+                console.log("ERRO AO SALVAR HABITO", error);
+                alert("Tente novamente.");
+                
+            })
+    }
+
+    function cancelarHabito(){
+        setHabito(false)
+    }
+
     return (
         <>
-            <Container>
+            <ContainerForm onSubmit={criarHabito}>
                 <input
+                    value={nomeHabito}
+                    onChange={(e) => setNomeHabito(e.target.value)}
                     required
                     type="text"
                     placeholder="nome do hábito"
                 />
                 <CheckDays>
-                    <button type="text" >D</button>
-                    <button type="text" >S</button>
-                    <button type="text" >T</button>
-                    <button type="text" >Q</button>
-                    <button type="text" >Q</button>
-                    <button type="text" >S</button>
-                    <button type="text" >S</button>
+                    {weekdays.map((d, indice) => <DayButton numHabitos={numHabitos} setNumHabitos={setNumHabitos} key={indice} d={d} indice={indice} />)}
                 </CheckDays>
                 <CancelSave>
-                    <p>Cancel</p>
+                    <p onClick={cancelarHabito}> Cancel</p>
                     <button>Salvar</button>
                 </CancelSave>
-            </Container>
+            </ContainerForm>
         </>
     )
 }
 
 
-const Container = styled.div`
+const ContainerForm = styled.form`
     width: 340px;
     height: 180px;
     left: 17px;
@@ -40,7 +84,6 @@ const Container = styled.div`
     border-radius: 5px;
     padding: 15px;
     margin-top: 10px;
-    margin-bottom: 30px;
     input{
         width: 303px;
         height: 45px;
@@ -54,7 +97,7 @@ const Container = styled.div`
         font-weight: 400;
         font-size: 19.976px;
         line-height: 25px;
-        color: #DBDBDB;
+        color: #474747;
         padding-left: 10px;
     }
 `
@@ -62,23 +105,6 @@ const Container = styled.div`
 const CheckDays = styled.div`
     display: flex;
     gap: 5px;
-    button{
-        box-sizing: border-box;
-        background: #FFFFFF;
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
-        width: 31px;
-        height: 31px;
-        margin-bottom: 30px;
-        margin-top: 10px;
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 19.976px;
-        line-height: 25px;
-        color: #DBDBDB;
-        cursor: pointer;
-    }
     `
 
 const CancelSave = styled.div`

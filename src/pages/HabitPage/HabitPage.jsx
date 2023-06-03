@@ -65,10 +65,10 @@ export default function HabitPage() {
                 </Header>
                 {habito === true ? <NovoHabito habito={habito} setHabito={setHabito} /> : ""}
                 <ListaHabitos>
-                    {arrayHabitos === undefined ?
+                    {arrayHabitos === undefined || arrayHabitos.length === 0 ?
                         <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>
                         :
-                        arrayHabitos.map((h, i) => <MeuHabito key={i} idHabito={idHabito} setIdHabito={setIdHabito} id={h.id} dias={h.days} arrayHabitos={arrayHabitos} nome={h.name} />)
+                        arrayHabitos.map((h, i) => <MeuHabito key={i} setArrayHabitos={setArrayHabitos} idHabito={idHabito} setIdHabito={setIdHabito} id={h.id} dias={h.days} arrayHabitos={arrayHabitos} nome={h.name} />)
                     }
                 </ListaHabitos>
             </ContainerHabitos>
@@ -89,7 +89,7 @@ const Home = styled.div`
     align-items: center;
 `
 const ContainerHabitos = styled.div`
-height: px;
+height: 580px;
 width: 375px;
 background-color: #E5E5E5;
 display: flex;

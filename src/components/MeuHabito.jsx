@@ -4,17 +4,22 @@ import Delete from "../imagens/delete.svg"
 import axios from "axios"
 import { useContext } from "react"
 import UserContext from "../contexts/UserContext"
-import { Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export default function MeuHabito(props) {
+    const { user } = useContext(UserContext);
+    const {
+        setArrayHabitos,
+        arrayDays,
+        setArrayDays,
+        dias,
+        id,
+    } = props;
+    const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"];
+    const navigate = useNavigate()
 
-    const { user } = useContext(UserContext)
-    const {idHabito, setIdHabito, arrayDays, setArrayDays, dias, id} = props
-    const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"]
-
-    function deletarHabito(){
-
-        setIdHabito(id)
+    function deletarHabito() {
+        
         const config = {
             headers: {
                 Authorization: `Bearer ${user}`,
@@ -22,26 +27,33 @@ export default function MeuHabito(props) {
         };
         axios
             .delete(
-                `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${idHabito}`,
+                `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
                 config
             )
-            .then(function (resposta) {
-                alert("deletou", resposta)
-                Navigate("/day")
+            .then(() => {
+                alert("deletou");
+                axios
+                    .get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`)
+                    .then((resposta) => {
+                        console.log(resposta.data);
+                        setArrayHabitos(resposta.data);
+                        navigate('/day');
+                    })
+                    .catch((error) => {
+                        console.log("Erro!", error);
+                    });
             })
-            .catch(function(error){
-                console.log(error.data)
-            })
-            .finally(() => {
-                Navigate("/day");
+            .catch(function (error) {
+                console.log(error.data);
             });
     }
+
 
     return (
         <ContainerHabito>
             <h1>{props.nome}</h1>
             <GrupoDias>
-                {weekdays.map((day, indice ) => <DaySelecteds i={indice} dias={dias}  arrayDays={arrayDays} setArrayDays={setArrayDays} dia={day} key={indice} disabled /> )}
+                {weekdays.map((day, indice) => <DaySelecteds i={indice} dias={dias} arrayDays={arrayDays} setArrayDays={setArrayDays} dia={day} key={indice} disabled />)}
             </GrupoDias>
             <img onClick={() => deletarHabito()} src={Delete} alt="delete-icon" />
         </ContainerHabito>

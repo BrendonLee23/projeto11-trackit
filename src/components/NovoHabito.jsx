@@ -118,11 +118,16 @@ const CancelSave = styled.div`
         font-family: 'Lexend Deca';
         font-style: normal;
         font-weight: 400;
-        font-size: 15.976px;
+        font-size: 16.976px;
         line-height: 20px;
         text-align: center;
         color: #52B6FF;
         cursor: pointer;
+        &:hover {
+    color: #ff0000; 
+    transition: 0.5s;
+    opacity: 0.7;
+    }
     }button{
         background: #52B6FF;
         border: #1572b4;
@@ -137,5 +142,9 @@ const CancelSave = styled.div`
         text-align: center;
         color: #FFFFFF;
         cursor: pointer;
+    }button:hover{
+    -webkit-transform: scale(1.5);
+    transform: scale(1.1);
     }
+    
 `

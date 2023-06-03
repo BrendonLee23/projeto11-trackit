@@ -1,10 +1,16 @@
 import styled from "styled-components"
 import DaySelecteds from "./DaySelecteds"
+import Delete from "../imagens/delete.svg"
 
 export default function MeuHabito(props) {
 
-    const {arrayDays, setArrayDays, dias} = props
+    const {arrayDays, setArrayDays, dias, id} = props
     const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"]
+
+    function deletarHabito(){
+        console.log(id)
+    }
+
 
     return (
         <ContainerHabito>
@@ -12,6 +18,7 @@ export default function MeuHabito(props) {
             <GrupoDias>
                 {weekdays.map((day, indice ) => <DaySelecteds i={indice} dias={dias}  arrayDays={arrayDays} setArrayDays={setArrayDays} dia={day} key={indice} disabled /> )}
             </GrupoDias>
+            <img onClick={deletarHabito} src={Delete} alt="delete-icon" />
         </ContainerHabito>
     )
 }
@@ -31,6 +38,17 @@ const ContainerHabito = styled.div`
         font-size: 19.976px;
         line-height: 25px;
         color:  #666666;
+        
+    }img{
+        color: #656464;
+        width: 15px;
+        height: 15px;
+        position:absolute;
+        margin-left: 308px ;
+        cursor: pointer;
+    }img:hover{
+    -webkit-transform: scale(1.5);
+    transform: scale(1.3);
     }
 `
 const GrupoDias = styled.div`

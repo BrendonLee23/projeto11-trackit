@@ -6,7 +6,7 @@ export default function DaySelecteds(props) {
     console.log(dias)
 
     return (
-        <Day type="button" isDaySelected={dias && dias.includes(i)}>
+        <Day type="button" disabled isDaySelected={dias && dias.includes(i)}>
             {props.dia}
         </Day>
     )
@@ -26,5 +26,4 @@ const Day = styled.button`
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
-    cursor: pointer;
 `;

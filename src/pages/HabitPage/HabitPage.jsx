@@ -14,7 +14,6 @@ export default function HabitPage() {
     const { user } = useContext(UserContext)
 
     const [habito, setHabito] = useState(false)
-    console.log(habito.name)
 
     const [arrayHabitos, setArrayHabitos] = useState(undefined)
         console.log(arrayHabitos)
@@ -64,7 +63,7 @@ export default function HabitPage() {
                     {arrayHabitos === undefined ?
                     <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>
                     :
-                    arrayHabitos.map((h, i) => <MeuHabito key={i} dias={h.days} arrayHabitos={arrayHabitos} nome={h.name} /> )
+                    arrayHabitos.map((h, i) => <MeuHabito key={i} id={h.id} dias={h.days} arrayHabitos={arrayHabitos} nome={h.name} /> )
                     }
                 </ListaHabitos>
             </ContainerHabitos>
@@ -118,7 +117,11 @@ button{
     align-items: center;
     justify-content: center;
     cursor: pointer;
-}
+    
+}button:hover{
+    -webkit-transform: scale(1.5);
+    transform: scale(1.1);
+    }
 `
 const Title = styled.h1`
         font-family: 'Lexend Deca';

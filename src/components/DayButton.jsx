@@ -31,9 +31,7 @@ export default function DayButton(props) {
     )
 }
 
-
 const Day = styled.button`
-
         box-sizing: border-box;
         background: ${props => props.cor};
         border: 1px solid #D5D5D5;

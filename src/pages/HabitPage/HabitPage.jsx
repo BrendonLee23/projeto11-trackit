@@ -14,8 +14,10 @@ export default function HabitPage() {
     const { user } = useContext(UserContext)
 
     const [habito, setHabito] = useState(false)
-    const [arrayDays, setArrayDays] = useState([])
+    console.log(habito.name)
+
     const [arrayHabitos, setArrayHabitos] = useState(undefined)
+        console.log(arrayHabitos)
 
     useEffect(() => {
 
@@ -32,7 +34,6 @@ export default function HabitPage() {
             )
             .then((response) => {
                 console.log(response.data)
-                setArrayDays(response.data.days)
                 setArrayHabitos(response.data)
             })
             .catch((error) => {
@@ -63,7 +64,7 @@ export default function HabitPage() {
                     {arrayHabitos === undefined ?
                     <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>
                     :
-                    arrayHabitos.map((h, i) => <MeuHabito key={i} arrayDays={arrayDays} nome={h.name} /> )
+                    arrayHabitos.map((h, i) => <MeuHabito key={i} dias={h.days} arrayHabitos={arrayHabitos} nome={h.name} /> )
                     }
                 </ListaHabitos>
             </ContainerHabitos>

@@ -2,8 +2,7 @@ import styled from "styled-components"
 
 export default function DaySelecteds(props) {
     const { i, dias } = props
-    console.log(i)
-    console.log(dias)
+
 
     return (
         <Day type="button" disabled isDaySelected={dias && dias.includes(i)}>

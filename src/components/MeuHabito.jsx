@@ -1,16 +1,41 @@
 import styled from "styled-components"
 import DaySelecteds from "./DaySelecteds"
 import Delete from "../imagens/delete.svg"
+import axios from "axios"
+import { useContext } from "react"
+import UserContext from "../contexts/UserContext"
+import { Navigate } from "react-router-dom"
 
 export default function MeuHabito(props) {
 
-    const {arrayDays, setArrayDays, dias, id} = props
+    const { user } = useContext(UserContext)
+    const {idHabito, setIdHabito, arrayDays, setArrayDays, dias, id} = props
     const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"]
 
     function deletarHabito(){
-        console.log(id)
-    }
 
+        setIdHabito(id)
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user}`,
+            },
+        };
+        axios
+            .delete(
+                `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${idHabito}`,
+                config
+            )
+            .then(function (resposta) {
+                alert("deletou", resposta)
+                Navigate("/day")
+            })
+            .catch(function(error){
+                console.log(error.data)
+            })
+            .finally(() => {
+                Navigate("/day");
+            });
+    }
 
     return (
         <ContainerHabito>
@@ -18,7 +43,7 @@ export default function MeuHabito(props) {
             <GrupoDias>
                 {weekdays.map((day, indice ) => <DaySelecteds i={indice} dias={dias}  arrayDays={arrayDays} setArrayDays={setArrayDays} dia={day} key={indice} disabled /> )}
             </GrupoDias>
-            <img onClick={deletarHabito} src={Delete} alt="delete-icon" />
+            <img onClick={() => deletarHabito()} src={Delete} alt="delete-icon" />
         </ContainerHabito>
     )
 }

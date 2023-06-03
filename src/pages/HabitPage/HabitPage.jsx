@@ -14,9 +14,10 @@ export default function HabitPage() {
     const { user } = useContext(UserContext)
 
     const [habito, setHabito] = useState(false)
+    const [idHabito, setIdHabito] = useState(undefined)
+    console.log(idHabito)
 
     const [arrayHabitos, setArrayHabitos] = useState(undefined)
-        console.log(arrayHabitos)
 
     useEffect(() => {
 
@@ -34,11 +35,14 @@ export default function HabitPage() {
             .then((response) => {
                 console.log(response.data)
                 setArrayHabitos(response.data)
+                console.log(response.data.id)
             })
             .catch((error) => {
                 console.log(error);
             })
     }, [])
+
+    
 
     function adicionarHabito() {
         if (habito === false) {
@@ -47,6 +51,7 @@ export default function HabitPage() {
             setHabito(false)
         }
     }
+
 
     return (
         <Home>
@@ -61,9 +66,9 @@ export default function HabitPage() {
                 {habito === true ? <NovoHabito habito={habito} setHabito={setHabito} /> : ""}
                 <ListaHabitos>
                     {arrayHabitos === undefined ?
-                    <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>
-                    :
-                    arrayHabitos.map((h, i) => <MeuHabito key={i} id={h.id} dias={h.days} arrayHabitos={arrayHabitos} nome={h.name} /> )
+                        <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>
+                        :
+                        arrayHabitos.map((h, i) => <MeuHabito key={i} idHabito={idHabito} setIdHabito={setIdHabito} id={h.id} dias={h.days} arrayHabitos={arrayHabitos} nome={h.name} />)
                     }
                 </ListaHabitos>
             </ContainerHabitos>

@@ -45,8 +45,9 @@ export default function NovoHabito(props) {
             })
             .catch((error) => {
                 console.log("ERRO AO SALVAR HABITO", error);
-
             })
+
+    
     }
 
     function cancelarHabito(){

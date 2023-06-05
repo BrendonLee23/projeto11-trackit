@@ -87,7 +87,8 @@ const Habito = styled.div`
     height: 69px;
     background: ${props => props.done ? "#8FC549" : "#E7E7E7"};
     border: 1px solid #e7e7e7;
-        border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
     }
 `
 const DivInfos = styled.div`

@@ -90,11 +90,11 @@ export default function DayPage() {
             <NavTop />
             <ContainerDay>
                 <Header>
-                    <Title>{diaDaSemana}, {dataFormatada}</Title>
+                    <Title data-test="today" >{diaDaSemana}, {dataFormatada}</Title>
                 </Header>
-                {marcados === 0 ? <p>Nenhum hábito concluído ainda</p>
+                {marcados === 0 ? <p  data-test="today-counter" >Nenhum hábito concluído ainda</p>
                     :
-                    <SubText>{porcentagem}% dos hábitos concluídos</SubText>
+                    <SubText data-test="today-counter" >{porcentagem}% dos hábitos concluídos</SubText>
                 }
                 <>
                     {lista?.map((h, i) => (

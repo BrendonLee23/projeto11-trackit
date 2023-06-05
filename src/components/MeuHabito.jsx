@@ -54,12 +54,12 @@ export default function MeuHabito(props) {
 
 
     return (
-        <ContainerHabito>
-            <h1>{props.nome}</h1>
+        <ContainerHabito data-test="habit-container">
+            <h1 data-test="habit-name">{props.nome}</h1>
             <GrupoDias>
                 {weekdays.map((day, indice) => <DaySelecteds i={indice} dias={dias} arrayDays={arrayDays} setArrayDays={setArrayDays} dia={day} key={indice} disabled />)}
             </GrupoDias>
-            <img onClick={() => deletarHabito()} src={Delete} alt="delete-icon" />
+            <img data-test="habit-delete-btn" onClick={() => deletarHabito()} src={Delete} alt="delete-icon" />
         </ContainerHabito>
     )
 }

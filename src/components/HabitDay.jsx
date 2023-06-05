@@ -55,17 +55,19 @@ export default function HabitDay(props) {
 
 
     return (
-        <Habito done={done}>
+        <Habito 
+                data-test="today-habit-container"
+                done={done}>
             <DivInfos sequencia={sequencia} record={record} done={done}>
-                <h1>{props.nome}</h1>
-                <h2>Sequência atual:
-                    <span> {texto1}</span>
+                <h1 data-test="today-habit-name" >{props.nome}</h1>
+                <h2 data-test="today-habit-sequence" >Sequência atual:
+                    <span data-test="today-habit-sequence" > {texto1}</span>
                 </h2>
-                <h3>Seu recorde:
-                    <span> {texto2}</span>
+                <h3 data-test="today-habit-record" >Seu recorde:
+                    <span data-test="today-habit-record" > {texto2}</span>
                 </h3>
             </DivInfos>
-            <img onClick={marcarHabito} src={Check} alt="check-img" />
+            <img data-test="today-habit-check-btn" onClick={marcarHabito} src={Check} alt="check-img" />
         </Habito>
     );
 }

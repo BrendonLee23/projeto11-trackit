@@ -5,7 +5,7 @@ export default function DaySelecteds(props) {
 
 
     return (
-        <Day type="button" disabled isDaySelected={dias && dias.includes(i)}>
+        <Day data-test="habit-day" type="button" disabled isDaySelected={dias && dias.includes(i)}>
             {props.dia}
         </Day>
     )

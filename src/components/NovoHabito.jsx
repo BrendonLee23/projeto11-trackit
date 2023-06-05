@@ -68,9 +68,10 @@ export default function NovoHabito(props) {
 
     return (
         <>
-            <ContainerForm onSubmit={criarHabito}>
+            <ContainerForm data-test="habit-create-container" onSubmit={criarHabito}>
                 <div>
                     <input
+                        data-test="habit-name-input"
                         value={nomeHabito}
                         onChange={(e) => setNomeHabito(e.target.value)}
                         required
@@ -78,11 +79,11 @@ export default function NovoHabito(props) {
                         placeholder="nome do hábito"
                     />
                     <CheckDays>
-                        {weekdays.map((d, indice) => <DayButton numHabitos={numHabitos} setNumHabitos={setNumHabitos} key={indice} d={d} indice={indice} />)}
+                        {weekdays.map((d, indice) => <DayButton data-test="habit-day" numHabitos={numHabitos} setNumHabitos={setNumHabitos} key={indice} d={d} indice={indice} />)}
                     </CheckDays>
                     <CancelSave>
-                        <p onClick={cancelarHabito}> Cancelar</p>
-                        <button>Salvar</button>
+                        <p data-test="habit-create-cancel-btn" onClick={cancelarHabito}> Cancelar</p>
+                        <button data-test="habit-create-save-btn" >Salvar</button>
                     </CancelSave>
                 </div>
             </ContainerForm>

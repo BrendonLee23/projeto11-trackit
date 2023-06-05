@@ -12,6 +12,7 @@ export default function DayButton(props) {
 
     return(
         <Day 
+        data-test="habit-day"
         corLetra={corLetra}
         cor={cor}
         type="button"

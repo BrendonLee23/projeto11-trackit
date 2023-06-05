@@ -8,10 +8,10 @@ export default function NavTop() {
     const { userImage } = useContext(UserContext)
 
     return (
-        <Top>
+        <Top  data-test="header" >
             <img src={Marca} alt="logo" />
             <UserImage>
-                <img src={userImage} alt="user-image" />
+                <img data-test="avatar" src={userImage} alt="user-image" />
             </UserImage>
         </Top>
     )

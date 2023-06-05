@@ -12,11 +12,11 @@ export default function NavBot() {
     const {porcentagem} = useContext(UserContext)
 
     return (
-        <Bottom>
-            <Link to={"/habit"} className="link">
+        <Bottom data-test="menu">
+            <Link data-test="habit-link" to={"/habit"} className="link">
                 <h1>Hábitos</h1>
             </Link>
-            <Link to={"/day"} className="link">
+            <Link data-test="today-link" to={"/day"} className="link">
                 <StyledButton>
                     <CircularProgressbar styles={buildStyles({
                         pathColor: '#FFFFFF',
@@ -28,7 +28,7 @@ export default function NavBot() {
                     <p>Hoje</p>
                 </StyledButton>
             </Link>
-            <Link to={"/historic"} className="link">
+            <Link data-test="history-link" to={"/historic"} className="link">
                 <h1>Histórico</h1>
             </Link>
         </Bottom>

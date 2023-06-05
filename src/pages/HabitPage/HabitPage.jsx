@@ -58,7 +58,7 @@ export default function HabitPage() {
             <ContainerHabitos>
                 <Header>
                     <Title>Meus hábitos</Title>
-                    <button onClick={adicionarHabito}>
+                    <button data-test="habit-create-btn" onClick={adicionarHabito}>
                         <img src={AddButton} alt="add-button" />
                     </button>
                 </Header>

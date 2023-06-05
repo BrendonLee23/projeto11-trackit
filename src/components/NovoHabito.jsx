@@ -14,7 +14,8 @@ export default function NovoHabito(props) {
     const { user } = useContext(UserContext)
     const [nomeHabito, setNomeHabito] = useState("")
     const [numHabitos, setNumHabitos] = useState([])
-    const {setHabito} = props
+    const { setHabito, setArrayHabitos } = props
+    // const [isHidden, setIsHidden] = useState(false)
 
 
     function criarHabito(event) {
@@ -41,37 +42,49 @@ export default function NovoHabito(props) {
             .then((response) => {
                 console.log("O HABITO FOI SALVO", response);
                 cancelarHabito()
-                // Navigate("/day");
+                axios
+                    .get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`,
+                        config)
+                    .then((resposta) => {
+                        console.log(resposta.data);
+                        setArrayHabitos(resposta.data);
+                    })
+                    .catch((error) => {
+                        console.log("Erro!", error);
+                    });
             })
             .catch((error) => {
                 console.log("ERRO AO SALVAR HABITO", error);
             })
-
-    
     }
 
-    function cancelarHabito(){
+    function cancelarHabito() {
         setHabito(false)
+        // setIsHidden(true)
     }
-
+    // if (isHidden) {
+    //     return null; // Retorna null se o componente estiver oculto
+    // }
 
     return (
         <>
             <ContainerForm onSubmit={criarHabito}>
-                <input
-                    value={nomeHabito}
-                    onChange={(e) => setNomeHabito(e.target.value)}
-                    required
-                    type="text"
-                    placeholder="nome do hábito"
-                />
-                <CheckDays>
-                    {weekdays.map((d, indice) => <DayButton numHabitos={numHabitos} setNumHabitos={setNumHabitos} key={indice} d={d} indice={indice} />)}
-                </CheckDays>
-                <CancelSave>
-                    <p onClick={cancelarHabito}> Cancel</p>
-                    <button>Salvar</button>
-                </CancelSave>
+                <div>
+                    <input
+                        value={nomeHabito}
+                        onChange={(e) => setNomeHabito(e.target.value)}
+                        required
+                        type="text"
+                        placeholder="nome do hábito"
+                    />
+                    <CheckDays>
+                        {weekdays.map((d, indice) => <DayButton numHabitos={numHabitos} setNumHabitos={setNumHabitos} key={indice} d={d} indice={indice} />)}
+                    </CheckDays>
+                    <CancelSave>
+                        <p onClick={cancelarHabito}> Cancelar</p>
+                        <button>Salvar</button>
+                    </CancelSave>
+                </div>
             </ContainerForm>
         </>
     )
@@ -79,6 +92,7 @@ export default function NovoHabito(props) {
 
 
 const ContainerForm = styled.form`
+    display: flex;
     width: 345px;
     height: 180px;
     left: 17px;

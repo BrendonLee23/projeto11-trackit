@@ -4,7 +4,6 @@ import Delete from "../imagens/delete.svg"
 import axios from "axios"
 import { useContext } from "react"
 import UserContext from "../contexts/UserContext"
-import { useNavigate } from "react-router-dom"
 
 export default function MeuHabito(props) {
     const { user } = useContext(UserContext);
@@ -16,37 +15,43 @@ export default function MeuHabito(props) {
         id,
     } = props;
     const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"];
-    const navigate = useNavigate()
 
     function deletarHabito() {
-        
-        const config = {
-            headers: {
-                Authorization: `Bearer ${user}`,
-            },
-        };
-        axios
-            .delete(
-                `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
-                config
-            )
-            .then(() => {
-                alert("deletou");
-                axios
-                    .get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`)
-                    .then((resposta) => {
-                        console.log(resposta.data);
-                        setArrayHabitos(resposta.data);
-                        navigate('/day');
-                    })
-                    .catch((error) => {
-                        console.log("Erro!", error);
-                    });
-            })
-            .catch(function (error) {
-                console.log(error.data);
-            });
+        let userResponse = confirm("Tem certeza que deseja cancelar o Hábito?");
+        if (userResponse === true) {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
+            };
+            axios
+                .delete(
+                    `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
+                    config
+                )
+                .then(() => {
+                    alert("deletou");
+                    axios
+                        .get(
+                            `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`,
+                            config
+                        )
+                        .then((resposta) => {
+                            console.log(resposta.data);
+                            setArrayHabitos(resposta.data);
+                        })
+                        .catch((error) => {
+                            console.log("Erro!", error);
+                        });
+                })
+                .catch(function (error) {
+                    console.log(error.data);
+                });
+        } else {
+            return;
+        }
     }
+
 
 
     return (

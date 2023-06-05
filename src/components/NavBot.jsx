@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import BotaoHoje from "../imagens/todayButton.png.svg";
+
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { useContext } from "react";
+import UserContext from "../contexts/UserContext";
+
+
 export default function NavBot() {
+
+    const {porcentagem} = useContext(UserContext)
+
     return (
         <Bottom>
             <Link to={"/habit"} className="link">
@@ -9,7 +18,13 @@ export default function NavBot() {
             </Link>
             <Link to={"/day"} className="link">
                 <StyledButton>
-                    <img src={BotaoHoje} alt="today-button" />
+                    <CircularProgressbar styles={buildStyles({
+                        pathColor: '#FFFFFF',
+                        textColor: '#FFFFFF',
+                        trailColor: '#52B6FF',
+                        // textSize: '40px'
+                        fontFamily:  'Lexend Deca'
+                    })} value={porcentagem} maxValue={100} />
                     <p>Hoje</p>
                 </StyledButton>
             </Link>
@@ -52,6 +67,10 @@ const Bottom = styled.div`
 `
 
 const StyledButton = styled.div`
+    background-color: #52B6FF;
+    border-radius: 50%;
+    width: 91px;
+    height: 91px;
     padding: 0;
     margin: 0;
     cursor: pointer;
@@ -60,13 +79,16 @@ const StyledButton = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-bottom: 10px;
-    img{
-            position: relative;
-        }
+    padding: 6px;
+    position: relative;
     p{
         position: absolute;
-        color: #FFFFFF; 
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17.976px;
+        line-height: 22px;
+        text-align: center;
+        color: #FFFFFF;
     }
-`;
-
+`

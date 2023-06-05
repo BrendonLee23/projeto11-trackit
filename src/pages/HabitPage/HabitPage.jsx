@@ -42,7 +42,6 @@ export default function HabitPage() {
             })
     }, [])
 
-    
 
     function adicionarHabito() {
         if (habito === false) {
@@ -63,7 +62,7 @@ export default function HabitPage() {
                         <img src={AddButton} alt="add-button" />
                     </button>
                 </Header>
-                {habito === true ? <NovoHabito habito={habito} setHabito={setHabito} /> : ""}
+                {habito === true ? <NovoHabito setArrayHabitos={setArrayHabitos} habito={habito} setHabito={setHabito} /> : ""}
                 <ListaHabitos>
                     {arrayHabitos === undefined || arrayHabitos.length === 0 ?
                         <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>

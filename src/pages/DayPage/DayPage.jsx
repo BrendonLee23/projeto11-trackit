@@ -1,15 +1,39 @@
 import styled from "styled-components"
 import NavTop from "../../components/NavTop"
 import NavBot from "../../components/NavBot"
-import Check from "../../imagens/check.svg"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import UserContext from "../../contexts/UserContext"
 import axios from "axios"
+import HabitDay from "../../components/HabitDay"
 
 
 export default function DayPage() {
 
-    const { user } = useContext(UserContext)
+    const { user, porcentagem, setPorcentagem} = useContext(UserContext)
+    const [mark, setMark] = useState(0)
+    const [lista, setLista] = useState(undefined)
+
+    // Função para definir a lista
+    const definirLista = (novaLista) => {
+        setLista(novaLista);
+    };
+    console.log(definirLista)
+    // Variável para armazenar o número de itens na lista
+    const quantidadeItens = lista ? lista.length : 0;
+
+    const definirPorcentagem = () => {
+        if (quantidadeItens > 0) {
+            const percent = Math.ceil((mark / quantidadeItens) * 100);
+            setPorcentagem(percent);
+        } else {
+            setPorcentagem(0);
+        }
+    };
+
+    console.log(quantidadeItens)
+    console.log(mark)
+    console.log(porcentagem)
+
     const dataAtual = new Date();
 
     const dia = String(dataAtual.getDate()).padStart(2, '0');
@@ -18,7 +42,6 @@ export default function DayPage() {
     // Obtém o dia da semana atual
     const diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
     const diaDaSemana = diasDaSemana[dataAtual.getDay()];
-
     // Formata a data no formato "dd/mm"
     const dataFormatada = `${dia}/${mes}`;
 
@@ -37,12 +60,18 @@ export default function DayPage() {
             )
             .then((response) => {
                 console.log(response.data)
-                
+                setLista(response.data)
+
             })
             .catch((error) => {
                 console.log(error);
             })
     }, [])
+
+    useEffect(() => {
+        definirPorcentagem();
+    }, [mark, quantidadeItens]);
+
 
     return (
         <Day>
@@ -51,74 +80,22 @@ export default function DayPage() {
                 <Header>
                     <Title>{diaDaSemana}, {dataFormatada}</Title>
                 </Header>
-                <p>Nenhum hábito concluído ainda</p>
-                <Habito>
-                    <DivInfos>
-                        <h1>Ler 1 capítulo de livro</h1>
-                        <h2>Sequência atual: 3 dias</h2>
-                        <h3>Seu recorde: 5 dias</h3>
-                    </DivInfos>
-                    <img src={Check} alt="check-img" />
-                </Habito>
-                <Habito>
-                    <DivInfos>
-                        <h1>Ler 1 capítulo de livro</h1>
-                        <h2>Sequência atual: 3 dias</h2>
-                        <h3>Seu recorde: 5 dias</h3>
-                    </DivInfos>
-                    <img src={Check} alt="check-img" />
-                </Habito>
-                <Habito>
-                    <DivInfos>
-                        <h1>Ler 1 capítulo de livro</h1>
-                        <h2>Sequência atual: 3 dias</h2>
-                        <h3>Seu recorde: 5 dias</h3>
-                    </DivInfos>
-                    <img src={Check} alt="check-img" />
-                </Habito>
-                <Habito>
-                    <DivInfos>
-                        <h1>Ler 1 capítulo de livro</h1>
-                        <h2>Sequência atual: 3 dias</h2>
-                        <h3>Seu recorde: 5 dias</h3>
-                    </DivInfos>
-                    <img src={Check} alt="check-img" />
-                </Habito>
-                <Habito>
-                    <DivInfos>
-                        <h1>Ler 1 capítulo de livro</h1>
-                        <h2>Sequência atual: 3 dias</h2>
-                        <h3>Seu recorde: 5 dias</h3>
-                    </DivInfos>
-                    <img src={Check} alt="check-img" />
-                </Habito>
-                <Habito>
-                    <DivInfos>
-                        <h1>Ler 1 capítulo de livro</h1>
-                        <h2>Sequência atual: 3 dias</h2>
-                        <h3>Seu recorde: 5 dias</h3>
-                    </DivInfos>
-                    <img src={Check} alt="check-img" />
-                </Habito>
-                <Habito>
-                    <DivInfos>
-                        <h1>Ler 1 capítulo de livro</h1>
-                        <h2>Sequência atual: 3 dias</h2>
-                        <h3>Seu recorde: 5 dias</h3>
-                    </DivInfos>
-                    <img src={Check} alt="check-img" />
-                </Habito>
-                <Habito>
-                    <DivInfos>
-                        <h1>Ler 1 capítulo de livro</h1>
-                        <h2>Sequência atual: 3 dias</h2>
-                        <h3>Seu recorde: 5 dias</h3>
-                    </DivInfos>
-                    <img src={Check} alt="check-img" />
-                </Habito>
-                
-
-
+                {mark === 0 ? <p>Nenhum hábito concluído ainda</p>
+                    :
+                    <SubText>{porcentagem}% dos hábitos concluídos</SubText>
+                }
+                <>
+                    {lista?.map((h, i) => (
+                        <HabitDay
+                            key={i}
+                            nome={h.name}
+                            sequencia={h.currentSequence}
+                            record={h.highestSequence}
+                            mark={h.done}
+                            setMark={setMark}
+                        />
+                    ))}
+                </>
             </ContainerDay>
             <NavBot />
         </Day>
@@ -169,47 +146,13 @@ const Header = styled.div`
     margin-top: 15px;
     margin-bottom: 15px;
 `
-const Habito = styled.div`
-    background: #FFFFFF;
-    border-radius: 5px;
-    width: 340px;
-    height: 94px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 7px;
-    img{
-        width: 69px;
-        height: 69px;
-        background: #EBEBEB;
-        border: 1px solid #E7E7E7;
-        border-radius: 5px;
-    }
 
-`
-const DivInfos = styled.div`
-    height: 65px;
-    width: 230px;
-    h1{
-        font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19.976px;
-    line-height: 25px;
-    color: #666666;
-    }h2{
+const SubText = styled.h1`
     font-family: 'Lexend Deca';
     font-style: normal;
     font-weight: 400;
-    font-size: 12.976px;
-    line-height: 16px;
-    }h3{
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12.976px;
-        line-height: 16px;
-    }
-`
-
+    font-size: 17.976px;
+    line-height: 22px;
+    color: #8FC549;
+    margin-bottom: 15px;
+    `

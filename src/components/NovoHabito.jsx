@@ -118,12 +118,10 @@ const ContainerForm = styled.form`
         padding-left: 10px;
     }
 `
-
 const CheckDays = styled.div`
     display: flex;
     gap: 5px;
-    `
-
+`
 const CancelSave = styled.div`
     display: flex;
     align-items: center;
@@ -161,5 +159,5 @@ const CancelSave = styled.div`
     -webkit-transform: scale(1.5);
     transform: scale(1.1);
     }
-    
+
 `

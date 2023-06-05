@@ -63,6 +63,10 @@ const Bottom = styled.div`
         line-height: 22px;
         text-align: center;
         color: #52B6FF;
+        :hover{
+            -webkit-transform: scale(1.5);
+            transform: scale(1.1);
+        }
     }
 `
 
@@ -74,13 +78,17 @@ const StyledButton = styled.div`
     padding: 0;
     margin: 0;
     cursor: pointer;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 6px;
     position: relative;
+    :hover{
+            -webkit-transform: scale(1.5);
+            transform: scale(1.1);
+        }
     p{
         position: absolute;
         font-family: 'Lexend Deca';

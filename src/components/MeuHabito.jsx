@@ -30,7 +30,6 @@ export default function MeuHabito(props) {
                     config
                 )
                 .then(() => {
-                    alert("deletou");
                     axios
                         .get(
                             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`,

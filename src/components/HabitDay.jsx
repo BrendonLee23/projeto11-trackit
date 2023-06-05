@@ -1,61 +1,77 @@
-import styled from "styled-components"
-
-import Check from "../imagens/check.svg"
-import { useState } from "react"
-
+import styled from "styled-components";
+import { useContext } from "react";
+import axios from "axios";
+import UserContext from "../contexts/UserContext";
+import Check from "../imagens/check.svg";
 
 export default function HabitDay(props) {
-    const {setMark } = props;
-    const [corImg, setCorImg] = useState("#ebebeb");
-    const [corTexto, setCorTexto] = useState("#666666");
-    const [sequencia, setSequencia] = useState(props.sequencia);
-    const [record, setRecord] = useState(props.record);
+    const { user } = useContext(UserContext);
+    const { id, done , sequencia, record, lista, setLista } = props;
 
-    const texto1 = (
-        <span style={{ color: corTexto }}>{`${sequencia} dias`}</span>
-    );
-    const texto2 = (
-        <span style={{ color: corTexto }}>{`${record} dias`}</span>
-    );
+
+    const texto1 = <span>{`${sequencia} dias`}</span>;
+    const texto2 = <span>{`${record} dias`}</span>;
 
     function marcarHabito() {
-        if(corImg === "#ebebeb"){
-            setCorImg("#8FC549")
-            setCorTexto("#8FC549")
-            setSequencia(prevSequencia => prevSequencia + 1)
-            setRecord(prevRecord => prevRecord + 1)
-            setMark((prevMark) => prevMark + 1);
-        }else{
-            setCorImg("#ebebeb")
-            setCorTexto("#ebebeb")
-            setSequencia(prevSequencia => prevSequencia - 1)
-            setRecord(prevRecord => prevRecord - 1)
-            setMark((prevMark) => prevMark - 1);
-        }
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user}`,
+            },
+        };
+
+        // const markIncrement = !check ? 1 : -1;
+
+        axios
+            .post(
+                `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/${done === true ? "uncheck" : "check"}`,
+                {},
+                config
+            )
+            .then((response) => {
+                console.log(response.data)
+                const habito = lista.find((item) => item.id === id)
+                console.log(habito)
+                habito.done = !habito.done
+                setLista([...lista])
+                // setMark(prevMark => prevMark + markIncrement);
+                axios
+                    .get(
+                        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
+                        config
+                    )
+                    .then((response) => {
+                        console.log(response.data)
+                        setLista(response.data)
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
 
     return (
-        <Habito>
-            <DivInfos>
+        <Habito done={done}>
+            <DivInfos sequencia={sequencia} record={record} done={done}>
                 <h1>{props.nome}</h1>
-                <h2>Sequência atual: {texto1}</h2>
-                <h3>Seu recorde: {texto2}</h3>
+                <h2>Sequência atual:
+                    <span> {texto1}</span>
+                </h2>
+                <h3>Seu recorde:
+                    <span> {texto2}</span>
+                </h3>
             </DivInfos>
-            <img
-                style={{ backgroundColor: corImg }}
-                onClick={marcarHabito}
-                src={Check}
-                alt="check-img"
-            />
+            <img onClick={marcarHabito} src={Check} alt="check-img" />
         </Habito>
     );
 }
 
-
-
 const Habito = styled.div`
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 5px;
     width: 340px;
     height: 94px;
@@ -64,32 +80,34 @@ const Habito = styled.div`
     justify-content: space-around;
     align-items: center;
     padding: 7px;
-    img{
-        width: 69px;
-        height: 69px;
-        background: ${(props) => { props.corImg }};
-        border: 1px solid #E7E7E7;
+    img {
+    width: 69px;
+    height: 69px;
+    background: ${props => props.done ? "#8FC549" : "#E7E7E7"};
+    border: 1px solid #e7e7e7;
         border-radius: 5px;
     }
-
 `
 const DivInfos = styled.div`
-    height: 65px;
-    width: 230px;
+        height: 65px;
+        width: 230px;
     h1{
         font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19.976px;
-    line-height: 25px;
-    color: #666666;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19.976px;
+        line-height: 25px;
+        color: #666666;
     }h2{
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12.976px;
-    line-height: 16px;
-    color: #666666;
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12.976px;
+        line-height: 16px;
+        color:#666666;
+        span{
+            color: ${props => props.done ? "#8FC549" : "#E7E7E7"};
+        }
     }h3{
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -97,5 +115,8 @@ const DivInfos = styled.div`
         font-size: 12.976px;
         line-height: 16px;
         color: #666666;
+        span{
+            color: ${props => props.sequencia === props.record && props.record > 0 ? "#8FC549" : "#E7E7E7"};
+        }
     }
 `

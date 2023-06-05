@@ -9,9 +9,20 @@ import HabitDay from "../../components/HabitDay"
 
 export default function DayPage() {
 
-    const { user, porcentagem, setPorcentagem} = useContext(UserContext)
+    const { user, porcentagem, setPorcentagem } = useContext(UserContext)
     const [mark, setMark] = useState(0)
     const [lista, setLista] = useState(undefined)
+    // const [check, setCheck] = useState(undefined)
+
+    const newArray = lista && lista.map((item) => {
+        if (item.done === true) {
+            return parseInt(item.id);
+        }
+        return null;
+    }).filter(Boolean);
+    const marcados = newArray ? newArray.length : 0;
+    console.log(marcados)
+
 
     // Função para definir a lista
     const definirLista = (novaLista) => {
@@ -23,7 +34,7 @@ export default function DayPage() {
 
     const definirPorcentagem = () => {
         if (quantidadeItens > 0) {
-            const percent = Math.ceil((mark / quantidadeItens) * 100);
+            const percent = Math.ceil((marcados / quantidadeItens) * 100);
             setPorcentagem(percent);
         } else {
             setPorcentagem(0);
@@ -33,6 +44,7 @@ export default function DayPage() {
     console.log(quantidadeItens)
     console.log(mark)
     console.log(porcentagem)
+    // console.log(check)
 
     const dataAtual = new Date();
 
@@ -70,7 +82,7 @@ export default function DayPage() {
 
     useEffect(() => {
         definirPorcentagem();
-    }, [mark, quantidadeItens]);
+    }, [lista]);
 
 
     return (
@@ -80,7 +92,7 @@ export default function DayPage() {
                 <Header>
                     <Title>{diaDaSemana}, {dataFormatada}</Title>
                 </Header>
-                {mark === 0 ? <p>Nenhum hábito concluído ainda</p>
+                {marcados === 0 ? <p>Nenhum hábito concluído ainda</p>
                     :
                     <SubText>{porcentagem}% dos hábitos concluídos</SubText>
                 }
@@ -91,8 +103,12 @@ export default function DayPage() {
                             nome={h.name}
                             sequencia={h.currentSequence}
                             record={h.highestSequence}
-                            mark={h.done}
                             setMark={setMark}
+                            id={h.id}
+                            done={h.done}
+                            // setCheck={setCheck}
+                            lista={lista}
+                            setLista={setLista}
                         />
                     ))}
                 </>
